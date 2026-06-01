@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using KineticTrack.Application.DTOs.Requests;
 using KineticTrack.Application.DTOs.Responses;
-using KineticTrack.Application.Repositories;
 using KineticTrack.Application.Security;
 using KineticTrack.Domain.Entities;
+using KineticTrack.Domain.Repositories;
 
 namespace KineticTrack.Application.Services
 {

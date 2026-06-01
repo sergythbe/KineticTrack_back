@@ -4,7 +4,7 @@ using System.Text;
 
 namespace KineticTrack.Infrastructure.Repositories
 {
-    internal class UserRepositories
+    internal class UserRepository
     {
     }
 }

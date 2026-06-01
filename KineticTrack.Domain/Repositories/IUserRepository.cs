@@ -1,6 +1,6 @@
-﻿using KineticTrack.Domain.Entities; 
+﻿using KineticTrack.Domain.Entities;
 
-namespace KineticTrack.Application.Repositories;
+namespace KineticTrack.Domain.Repositories;
 
 public interface IUserRepository
 {
