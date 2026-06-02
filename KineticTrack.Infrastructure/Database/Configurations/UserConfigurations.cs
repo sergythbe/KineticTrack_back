@@ -18,29 +18,38 @@ namespace KineticTrack.Infrastructure.Database.Configurations
             builder.ToTable("USERS");
 
             builder.HasKey(e => e.UserId);
-
-            // --- CONTRAINTES DE SÉCURITÉ & TAILLE ---
-            // Plus besoin de HasColumnName ! Le package s'en occupe en arrière-plan.
             builder.Property(e => e.Firstname).IsRequired().HasMaxLength(50);
             builder.Property(e => e.Lastname).IsRequired().HasMaxLength(50);
             builder.Property(e => e.Email).IsRequired().HasMaxLength(250);
             builder.Property(e => e.PasswordHash).IsRequired().HasMaxLength(255);
+            builder.Property(e => e.IsPasswordChanged).IsRequired();
+            builder.Property(e => e.IsActive).IsRequired();
+            builder.Property(e => e.IsDeleted).IsRequired();
 
             // Contrainte d'unicité sur l'email
             builder.HasIndex(e => e.Email).IsUnique();
 
             // --- DATA SEEDING ---
             builder.HasData(
-                new User(AdminId, "$2a$11$EvX7FvY.bW2w8WvSgK6Oeeun7v6pMihV9b2XoA8JqfE3m8N56gZ6G", "Admin", "KineticTrack", "admin@kinetictrack.be")
-                {
-                    IsActive = true,
-                    IsPasswordChanged = true
-                },
-                new User(SecretaryId, "$2a$11$EvX7FvY.bW2w8WvSgK6Oeeun7v6pMihV9b2XoA8JqfE3m8N56gZ6G", "Marie", "Secrétaire", "marie@kinetictrack.be")
-                {
-                    IsActive = true,
-                    IsPasswordChanged = true
-                }
+
+                new User(
+                    AdminId,
+                    "$2a$11$EvX7FvY.bW2w8WvSgK6Oeeun7v6pMihV9b2XoA8JqfE3m8N56gZ6G",
+                    "Admin",
+                    "KineticTrack",
+                    "admin@kinetictrack.be",
+                    isActive: true,           
+                    isPasswordChanged: true    
+                ),
+                new User(
+                    SecretaryId,
+                    "$2a$11$EvX7FvY.bW2w8WvSgK6Oeeun7v6pMihV9b2XoA8JqfE3m8N56gZ6G",
+                    "Marie",
+                    "Secrétaire",
+                    "marie@kinetictrack.be",
+                    isActive: true,
+                    isPasswordChanged: true
+                )
             );
         }
     }
