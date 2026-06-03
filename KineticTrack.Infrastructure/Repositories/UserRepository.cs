@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using KineticTrack.Application.Repositories; 
+using KineticTrack.Domain.Repositories; 
 using KineticTrack.Domain.Entities;         
 using KineticTrack.Infrastructure.Database.Context; 
 
@@ -9,14 +9,10 @@ namespace KineticTrack.Infrastructure.Repositories;
 
 public class UserRepository : IUserRepository
 {
-<<<<<<< Updated upstream:KineticTrack.Infrastructure/Repositories/UserRepository.cs
-    internal class UserRepository
-=======
     private readonly KineticTrackDbContext _context;
 
     // On injecte le DbContext d'EF Core pour KineticTrack
     public UserRepository(KineticTrackDbContext context)
->>>>>>> Stashed changes:KineticTrack.Infrastructure/Repositories/UserRepositories.cs
     {
         _context = context;
     }

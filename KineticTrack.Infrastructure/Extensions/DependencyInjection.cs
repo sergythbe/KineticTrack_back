@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using KineticTrack.Application.Repositories;
+using KineticTrack.Domain.Repositories;
 using KineticTrack.Infrastructure.Database.Context;
 using KineticTrack.Infrastructure.Repositories;
 
