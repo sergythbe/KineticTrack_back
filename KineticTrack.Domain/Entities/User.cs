@@ -24,17 +24,27 @@ public class User
         Email = string.Empty;
     }
 
-    public User(Guid userId, string passwordHash, string firstname, string lastname, string email)
+    public User(
+      Guid userId,
+      string passwordHash,
+      string firstname,
+      string lastname,
+      string email,
+      DateTime? createdAt = null,
+      bool isActive = false,           
+      bool isPasswordChanged = false,   
+      bool isDeleted = false)           
     {
         UserId = userId;
         PasswordHash = passwordHash;
         Firstname = firstname.Trim();
         Lastname = lastname.Trim();
-        Email = email.Trim().ToLower(); 
-        CreatedAt = DateTime.UtcNow;
-        IsPasswordChanged = false;
-        IsActive = false;
-        IsDeleted = false;
+        Email = email.Trim().ToLower();
+
+        CreatedAt = createdAt ?? DateTime.UtcNow;
+        IsActive = isActive;
+        IsPasswordChanged = isPasswordChanged;
+        IsDeleted = isDeleted;
     }
     //Contructeur indispensable pour mon seed data
     public User(Guid userId, string passwordHash, string firstname, string lastname, string email, bool isActive, bool isPasswordChanged)

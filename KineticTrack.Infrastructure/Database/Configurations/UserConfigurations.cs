@@ -38,8 +38,10 @@ namespace KineticTrack.Infrastructure.Database.Configurations
                     "Admin",
                     "KineticTrack",
                     "admin@kinetictrack.be",
+                    new DateTime(2026, 6, 4, 10, 9, 27, 355, DateTimeKind.Utc),
                     isActive: true,           
-                    isPasswordChanged: true    
+                    isPasswordChanged: true
+                    
                 ),
                 new User(
                     SecretaryId,
@@ -47,6 +49,7 @@ namespace KineticTrack.Infrastructure.Database.Configurations
                     "Marie",
                     "Secrétaire",
                     "marie@kinetictrack.be",
+                    new DateTime(2026, 6, 4, 10, 9, 27, 355, DateTimeKind.Utc),
                     isActive: true,
                     isPasswordChanged: true
                 )
