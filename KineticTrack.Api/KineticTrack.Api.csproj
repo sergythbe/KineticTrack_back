@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KineticTrack.Application\KineticTrack.Application.csproj" />
+    <ProjectReference Include="..\KineticTrack.Bootstrapper\KineticTrack.Bootstrapper.csproj" />
   </ItemGroup>
 
 </Project>

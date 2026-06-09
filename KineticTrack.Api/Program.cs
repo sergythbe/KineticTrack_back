@@ -1,3 +1,6 @@
+using KineticTrack.Bootstrapper;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 
