@@ -2,15 +2,14 @@
 using KineticTrack.Application.Security;
 using KineticTrack.Security.Services.Tools;
 
-namespace KineticTrack.Security.Extensions
-{
-    public static class SecurityServiceExtension
-    {
-        public static IServiceCollection AddSecurityServices(this IServiceCollection services)
-        {
-            services.AddScoped<IPasswordHasher, PasswordHasherService>();
+namespace KineticTrack.Security.Extensions;
 
-            return services;
-        }
+public static class SecurityServiceExtension
+{
+    public static IServiceCollection AddSecurityServices(this IServiceCollection services)
+    {
+        services.AddScoped<IPasswordHasher, PasswordHasherService>();
+    
+        return services;
     }
 }

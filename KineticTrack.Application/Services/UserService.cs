@@ -41,7 +41,8 @@ namespace KineticTrack.Application.Services
 
             // 3. Application de la Stratégie B : Génération du mot de passe temporaire
             // On peut générer une chaîne aléatoire propre (ici un exemple simple basé sur le nom)
-            string temporaryPassword = $"{request.Lastname.ToUpper()}{DateTime.Today.Year}!";
+            string cleanLastname = request.Lastname.Replace(" ", "");
+            string temporaryPassword = $"{cleanLastname.ToUpper()}{DateTime.Today.Year}!";
 
             // 4. Hachage du mot de passe via notre contrat Security
             string passwordHash = _passwordHasher.Hash(temporaryPassword);
