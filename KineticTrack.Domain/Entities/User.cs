@@ -14,6 +14,11 @@ public class User
     public bool IsActive { get; private set; }
     public bool IsDeleted { get; private set; }
 
+   
+    public Practitioner? Practitioner { get; private set; }   // null si pas kiné
+    public Patient? Patient { get; private set; }              // null si pas patient
+    public ICollection<CabinetMember> CabinetMemberships { get; private set; } = new List<CabinetMember>();
+
     //permet à EF de créér un USER
     private User()
     {
@@ -46,16 +51,7 @@ public class User
         IsPasswordChanged = isPasswordChanged;
         IsDeleted = isDeleted;
     }
-    //Contructeur indispensable pour mon seed data
-    public User(Guid userId, string passwordHash, string firstname, string lastname, string email, bool isActive, bool isPasswordChanged)
-        : this(userId, passwordHash, firstname, lastname, email) 
-    {
-       
-        IsActive = isActive;
-        IsPasswordChanged = isPasswordChanged;
-    }
-
-
+   
     public void UpdateProfile(string lastname, string firstname)
     {
         Lastname = lastname.Trim();
