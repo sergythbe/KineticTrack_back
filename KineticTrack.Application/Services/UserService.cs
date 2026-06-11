@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using KineticTrack.Application.Common.Utilities;
 using KineticTrack.Application.DTOs.Requests;
 using KineticTrack.Application.DTOs.Responses;
 using KineticTrack.Application.Security;
@@ -41,8 +42,8 @@ namespace KineticTrack.Application.Services
 
             // 3. Application de la Stratégie B : Génération du mot de passe temporaire
             // On peut générer une chaîne aléatoire propre (ici un exemple simple basé sur le nom)
-            string cleanLastname = request.Lastname.Replace(" ", "");
-            string temporaryPassword = $"{cleanLastname.ToUpper()}{DateTime.Today.Year}!";
+
+            string temporaryPassword = PasswordGenerator.Generate();
 
             // 4. Hachage du mot de passe via notre contrat Security
             string passwordHash = _passwordHasher.Hash(temporaryPassword);
