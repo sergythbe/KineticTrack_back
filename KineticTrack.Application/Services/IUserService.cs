@@ -8,5 +8,6 @@ namespace KineticTrack.Application.Services
         Task<RegisterUserResponse> RegisterPatientAsync(RegisterPatientRequest request);
 
         Task<RegisterUserResponse> RegisterStaffAsync(RegisterStaffRequest request);
+        Task<LoginResponse> LoginAsync(LoginRequest request);
     }
 }
