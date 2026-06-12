@@ -3,6 +3,7 @@ using KineticTrack.Application.Common.Utilities;
 using KineticTrack.Application.DTOs.Requests;
 using KineticTrack.Application.DTOs.Responses;
 using KineticTrack.Application.Security;
+using KineticTrack.Application.Validators;
 using KineticTrack.Domain.Entities;
 using KineticTrack.Domain.Repositories;
 
@@ -115,5 +116,28 @@ public class UserService : IUserService
             Token = _jwtService.GenerateToken(user.UserId, user.Email, user.Firstname, user.Lastname),
             RequiresPasswordChange = false
         };
+    }
+
+    public async Task ChangePasswordAsync(Guid userId, ChangePasswordRequest request)
+    {
+
+        var validator = new ChangePasswordValidator();
+        var validationResult = await validator.ValidateAsync(request);
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+     
+        var user = await _userRepository.GetByIdAsync(userId);
+        if (user is null)
+            throw new UnauthorizedAccessException("Utilisateur introuvable.");
+
+        var isCurrentPasswordValid = _passwordHasher.Verify(request.CurrentPassword, user.PasswordHash);
+        if (!isCurrentPasswordValid)
+            throw new UnauthorizedAccessException("Le mot de passe actuel est incorrect.");
+
+        var newPasswordHash = _passwordHasher.Hash(request.NewPassword);
+
+        user.DefineFirstPersonalPassword(newPasswordHash);
+        await _userRepository.SaveChangesAsync();
     }
 }

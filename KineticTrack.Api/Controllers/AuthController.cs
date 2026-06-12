@@ -1,6 +1,9 @@
-﻿using KineticTrack.Application.DTOs.Requests;
+﻿using FluentValidation;
+using KineticTrack.Application.DTOs.Requests;
 using KineticTrack.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace KineticTrack.Api.Controllers;
 
@@ -32,6 +35,26 @@ public class AuthController : ControllerBase
         catch (UnauthorizedAccessException ex)
         {
             return Unauthorized(new { message = ex.Message });
+        }
+    }
+
+    [HttpPost("change-password")]
+    [Authorize]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+    {
+        try
+        {
+            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            await _userService.ChangePasswordAsync(userId, request);
+            return Ok(new { message = "Mot de passe modifié avec succès." });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { message = ex.Message });
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(new { errors = ex.Errors.Select(e => e.ErrorMessage) });
         }
     }
 

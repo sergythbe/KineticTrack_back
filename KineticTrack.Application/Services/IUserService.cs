@@ -9,5 +9,6 @@ namespace KineticTrack.Application.Services
 
         Task<RegisterUserResponse> RegisterStaffAsync(RegisterStaffRequest request);
         Task<LoginResponse> LoginAsync(LoginRequest request);
+        Task ChangePasswordAsync(Guid userId, ChangePasswordRequest request);
     }
 }

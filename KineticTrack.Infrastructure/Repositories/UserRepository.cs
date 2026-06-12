@@ -34,6 +34,12 @@ public class UserRepository : IUserRepository
         return await _context.Users
             .FirstOrDefaultAsync(u => u.Email == email.Trim().ToLower());
     }
+
+    public async Task<User?> GetByIdAsync(Guid userId)
+    {
+        return await _context.Users
+            .FirstOrDefaultAsync(u => u.UserId == userId);
+    }
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();
