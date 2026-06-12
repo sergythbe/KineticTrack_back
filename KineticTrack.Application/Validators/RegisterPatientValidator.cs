@@ -1,8 +1,5 @@
 ﻿using FluentValidation;
 using KineticTrack.Application.DTOs.Requests;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace KineticTrack.Application.Validators;
 
@@ -27,7 +24,7 @@ public class RegisterPatientValidator : AbstractValidator<RegisterPatientRequest
             .LessThan(DateTime.Today).WithMessage("La date de naissance ne peut pas être dans le futur.");
 
         RuleFor(x => x.Gender)
-            .NotEmpty().WithMessage("Le genre est obligatoire.");
+            .IsInEnum().WithMessage("Le genre est obligatoire.");
 
     }
 }

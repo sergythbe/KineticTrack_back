@@ -80,18 +80,15 @@ public class UserService : IUserService
 
     public async Task<LoginResponse> LoginAsync(LoginRequest request)
     {
-        
         var user = await _userRepository.GetByEmailAsync(request.Email);
         if (user is null)
             throw new UnauthorizedAccessException("Email ou mot de passe incorrect.");
-
-        if (!user.IsActive)
-            throw new UnauthorizedAccessException("Ce compte est désactivé.");
 
         var isPasswordValid = _passwordHasher.Verify(request.Password, user.PasswordHash);
         if (!isPasswordValid)
             throw new UnauthorizedAccessException("Email ou mot de passe incorrect.");
 
+        // Premier login — mot de passe temporaire, compte pas encore actif
         if (!user.IsPasswordChanged)
         {
             return new LoginResponse
@@ -104,6 +101,10 @@ public class UserService : IUserService
                 RequiresPasswordChange = true
             };
         }
+
+        // Login normal — compte doit être actif
+        if (!user.IsActive)
+            throw new UnauthorizedAccessException("Ce compte est désactivé.");
 
         return new LoginResponse
         {

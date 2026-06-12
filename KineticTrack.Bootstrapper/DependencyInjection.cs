@@ -13,7 +13,7 @@ public static class DependencyInjection
     {
        
         services.AddInfrastructureServices(configuration);
-        services.AddSecurityServices();
+        services.AddSecurityServices(configuration);
         services.AddValidatorsFromAssemblyContaining<UserService>();         
         services.AddScoped<IUserService, UserService>();
         services.AddAuthorization();

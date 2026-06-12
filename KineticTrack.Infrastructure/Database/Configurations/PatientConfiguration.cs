@@ -12,8 +12,11 @@ public class PatientConfiguration : IEntityTypeConfiguration<Patient>
 
         builder.HasKey(e => e.PatientId);
         builder.Property(e => e.Birthdate).IsRequired();
-        builder.Property(e => e.Gender).IsRequired().HasMaxLength(50);
         builder.Property(e => e.MedicalHistory).HasMaxLength(5000);
+        builder.Property(e => e.Gender)
+        .IsRequired()
+        .HasConversion<string>()  
+        .HasMaxLength(50);
 
         // Relation 1-to-1 avec User
         builder.HasOne(e => e.User)

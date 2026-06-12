@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using KineticTrack.Domain.Enums;
 
 namespace KineticTrack.Application.DTOs.Requests;
 
@@ -12,6 +10,6 @@ public class RegisterPatientRequest
 
     // Données spécifiques à la table PATIENT
     public DateTime Birthdate { get; set; }
-    public string Gender { get; set; } = string.Empty;
+    public Gender Gender { get; set; }
     public string MedicalHistory { get; set; } = string.Empty;
 }
