@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using KineticTrack.Domain.Entities;
 
@@ -34,7 +33,7 @@ namespace KineticTrack.Infrastructure.Database.Configurations
 
                 new User(
                     AdminId,
-                    "$2a$11$EvX7FvY.bW2w8WvSgK6Oeeun7v6pMihV9b2XoA8JqfE3m8N56gZ6G",
+                    "aVZ5lhmja/hC7/cO/dMYWYOGfWYzFH4Is4X2UAazw9GRGBDCaaBdKcHUYP3TtXKo",
                     "Admin",
                     "KineticTrack",
                     "admin@kinetictrack.be",
@@ -45,7 +44,7 @@ namespace KineticTrack.Infrastructure.Database.Configurations
                 ),
                 new User(
                     SecretaryId,
-                    "$2a$11$EvX7FvY.bW2w8WvSgK6Oeeun7v6pMihV9b2XoA8JqfE3m8N56gZ6G",
+                    "aVZ5lhmja/hC7/cO/dMYWYOGfWYzFH4Is4X2UAazw9GRGBDCaaBdKcHUYP3TtXKo",
                     "Marie",
                     "Secrétaire",
                     "marie@kinetictrack.be",

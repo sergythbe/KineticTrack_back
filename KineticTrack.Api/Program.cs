@@ -2,6 +2,7 @@ using KineticTrack.Bootstrapper;
 using Scalar.AspNetCore;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -10,14 +11,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.AddApplicationDependencies(builder.Configuration);
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters
+        .Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AngularClient", policy =>
     {
-        policy.WithOrigins("http://localhost:4200") 
-              .AllowAnyHeader()                 
-              .AllowAnyMethod();                   
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
@@ -30,6 +36,7 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
+
 app.UseHttpsRedirection();
 app.UseCors("AngularClient");
 app.UseAuthentication();
@@ -37,5 +44,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 
 

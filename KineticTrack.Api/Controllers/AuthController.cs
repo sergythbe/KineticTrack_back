@@ -20,8 +20,19 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterPatientRequest request)
     {
-        var response = await _userService.RegisterPatientAsync(request);
-        return Ok(response);
+        try
+        {
+            var response = await _userService.RegisterPatientAsync(request);
+            return Ok(response);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new { message = ex.Message }); // 409
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(new { errors = ex.Errors.Select(e => e.ErrorMessage) });
+        }
     }
 
     [HttpPost("login")]
@@ -57,6 +68,8 @@ public class AuthController : ControllerBase
             return BadRequest(new { errors = ex.Errors.Select(e => e.ErrorMessage) });
         }
     }
+
+    
 
     //public async Task<IActionResult> Register([FromBody] RegisterStaffRequest request)
     //{

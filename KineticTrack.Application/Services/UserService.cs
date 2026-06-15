@@ -39,7 +39,7 @@ public class UserService : IUserService
         var emailExists = await _userRepository.ExistsByEmailAsync(request.Email);
         if (emailExists)
         {
-            throw new InvalidOperationException("Cette adresse email est déjà utilisée.");
+            throw new InvalidOperationException("L'enregistrement a échoué. Vérifiez les informations saisies.");
         }
 
 
