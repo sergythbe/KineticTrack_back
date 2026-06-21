@@ -5,6 +5,7 @@ using KineticTrack.Application.DTOs.Responses;
 using KineticTrack.Application.Security;
 using KineticTrack.Application.Validators;
 using KineticTrack.Domain.Entities;
+using KineticTrack.Domain.Enums;
 using KineticTrack.Domain.Repositories;
 
 namespace KineticTrack.Application.Services;
@@ -39,9 +40,8 @@ public class UserService : IUserService
         var emailExists = await _userRepository.ExistsByEmailAsync(request.Email);
         if (emailExists)
         {
-            throw new InvalidOperationException("L'enregistrement a échoué. Vérifiez les informations saisies.");
+            throw new InvalidOperationException("Cette adresse email est déjà utilisée.");
         }
-
 
         string temporaryPassword = PasswordGenerator.Generate();
 
@@ -55,7 +55,6 @@ public class UserService : IUserService
             request.Lastname,
             request.Email
         );
-
 
         // TODO: Plus tard, lors du looping Patient, on instanciera ici l'entité Patient 
         // avec sa date de naissance, son genre et ses antécédents médicaux issus du MLD !
@@ -75,7 +74,6 @@ public class UserService : IUserService
 
     public async Task<RegisterUserResponse> RegisterStaffAsync(RegisterStaffRequest request)
     {
-      
         throw new NotImplementedException();
     }
 
@@ -89,6 +87,8 @@ public class UserService : IUserService
         if (!isPasswordValid)
             throw new UnauthorizedAccessException("Email ou mot de passe incorrect.");
 
+        var role = DetermineRole(user);
+
         // Premier login — mot de passe temporaire, compte pas encore actif
         if (!user.IsPasswordChanged)
         {
@@ -98,6 +98,7 @@ public class UserService : IUserService
                 Email = user.Email,
                 Firstname = user.Firstname,
                 Lastname = user.Lastname,
+                Role = role,
                 Token = _jwtService.GenerateTempToken(user.UserId, user.Email),
                 RequiresPasswordChange = true
             };
@@ -113,20 +114,19 @@ public class UserService : IUserService
             Email = user.Email,
             Firstname = user.Firstname,
             Lastname = user.Lastname,
-            Token = _jwtService.GenerateToken(user.UserId, user.Email, user.Firstname, user.Lastname),
+            Role = role,
+            Token = _jwtService.GenerateToken(user.UserId, user.Email, user.Firstname, user.Lastname, role),
             RequiresPasswordChange = false
         };
     }
 
     public async Task ChangePasswordAsync(Guid userId, ChangePasswordRequest request)
     {
-
         var validator = new ChangePasswordValidator();
         var validationResult = await validator.ValidateAsync(request);
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-     
         var user = await _userRepository.GetByIdAsync(userId);
         if (user is null)
             throw new UnauthorizedAccessException("Utilisateur introuvable.");
@@ -139,5 +139,24 @@ public class UserService : IUserService
 
         user.DefineFirstPersonalPassword(newPasswordHash);
         await _userRepository.SaveChangesAsync();
+    }
+
+    private static UserRole DetermineRole(User user)
+    {
+        if (user.Patient is not null)
+            return UserRole.Patient;
+
+        var cabinetRole = user.CabinetMemberships.FirstOrDefault()?.RoleAtCabinet
+      ?? throw new InvalidOperationException("Utilisateur sans rôle défini.");
+
+
+
+        return cabinetRole switch
+        {
+            CabinetRole.Admin => UserRole.Admin,
+            CabinetRole.Practitioner => UserRole.Practitioner,
+            CabinetRole.Secretary => UserRole.Secretary,
+            _ => throw new InvalidOperationException("Rôle cabinet inconnu.")
+        };
     }
 }

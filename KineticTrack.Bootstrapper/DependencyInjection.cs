@@ -16,6 +16,7 @@ public static class DependencyInjection
         services.AddSecurityServices(configuration);
         services.AddValidatorsFromAssemblyContaining<UserService>();         
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IDashboardService, DashboardService>();
         services.AddAuthorization();
 
         return services;

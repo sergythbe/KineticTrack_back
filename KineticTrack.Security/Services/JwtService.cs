@@ -1,10 +1,12 @@
 ﻿
+using KineticTrack.Application.Security;
+using KineticTrack.Domain.Enums;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using KineticTrack.Application.Security;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace KineticTrack.Security.Services;
 
@@ -23,7 +25,7 @@ public class JwtService : IJwtService
         _expirationMinutes = int.Parse(configuration["Jwt:ExpirationMinutes"]!);
     }
 
-    public string GenerateToken(Guid userId, string email, string firstname, string lastname)
+    public string GenerateToken(Guid userId, string email, string firstname, string lastname, UserRole role)
     {
         var claims = new[]
         {
@@ -31,6 +33,7 @@ public class JwtService : IJwtService
             new Claim(ClaimTypes.Email, email),
             new Claim(ClaimTypes.GivenName, firstname),
             new Claim(ClaimTypes.Surname, lastname),
+            new Claim(ClaimTypes.Role, role.ToString()),
             new Claim("requires_password_change", "false")
         };
 

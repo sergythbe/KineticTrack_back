@@ -43,7 +43,7 @@ public class CabinetMemberConfiguration : IEntityTypeConfiguration<CabinetMember
             new CabinetMember(
                 UserConfiguration.SecretaryId,
                 CabinetConfiguration.CabinetId,
-                CabinetRole.Secretaire,
+                CabinetRole.Secretary,
                 isOwner: false
             )
         );

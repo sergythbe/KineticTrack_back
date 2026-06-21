@@ -4,9 +4,10 @@ using System.Text;
 
 namespace KineticTrack.Domain.Enums;
 
-public enum CabinetRole
+public enum UserRole
 {
-    Admin,
+    Patient,
     Practitioner,
-    Secretary
+    Secretary,
+    Admin
 }

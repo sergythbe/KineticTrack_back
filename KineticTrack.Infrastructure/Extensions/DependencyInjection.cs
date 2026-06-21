@@ -17,6 +17,8 @@ public static class DependencyInjection
                    .UseSnakeCaseNamingConvention());
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICareEpisodeRepository, CareEpisodeRepository>();   
+
 
         return services;
     }
