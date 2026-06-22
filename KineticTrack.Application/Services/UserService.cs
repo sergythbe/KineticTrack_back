@@ -13,17 +13,20 @@ namespace KineticTrack.Application.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IPatientRepository _patientRepository;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IValidator<RegisterPatientRequest> _patientValidator;
     private readonly IJwtService _jwtService;
 
     public UserService(
         IUserRepository userRepository,
+        IPatientRepository patientRepository,  
         IPasswordHasher passwordHasher,
         IValidator<RegisterPatientRequest> patientValidator,
         IJwtService jwtService)
     {
         _userRepository = userRepository;
+        _patientRepository = patientRepository;
         _passwordHasher = passwordHasher;
         _patientValidator = patientValidator;
         _jwtService = jwtService;
@@ -56,10 +59,18 @@ public class UserService : IUserService
             request.Email
         );
 
-        // TODO: Plus tard, lors du looping Patient, on instanciera ici l'entité Patient 
-        // avec sa date de naissance, son genre et ses antécédents médicaux issus du MLD !
+        var patientId = Guid.NewGuid();
+        var birthdate = DateOnly.FromDateTime(request.Birthdate);
+        var newPatient = new Patient(
+            patientId,
+            birthdate,
+            request.Gender.ToString(),
+            request.MedicalHistory,
+            userId
+        );
 
         await _userRepository.AddAsync(newUser);
+        await _patientRepository.AddAsync(newPatient);
         await _userRepository.SaveChangesAsync();
 
         return new RegisterUserResponse
