@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using FluentValidation;
-using KineticTrack.Application.Services; 
-using KineticTrack.Infrastructure;       
+﻿using FluentValidation;
+using KineticTrack.Application.Services;
+using KineticTrack.Domain.Repositories;
+using KineticTrack.Infrastructure;
+using KineticTrack.Infrastructure.Repositories;
 using KineticTrack.Security.Extensions;  
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace KineticTrack.Bootstrapper;
 
@@ -17,6 +19,7 @@ public static class DependencyInjection
         services.AddValidatorsFromAssemblyContaining<UserService>();         
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IDashboardService, DashboardService>();
+        services.AddScoped<IAppointmentService, AppointmentService>();
         services.AddAuthorization();
 
         return services;

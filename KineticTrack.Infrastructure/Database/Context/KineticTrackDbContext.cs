@@ -19,6 +19,7 @@ public class KineticTrackDbContext : DbContext
     public DbSet<ExerciseLibrary> ExerciseLibraries { get; set; } = null!;
     public DbSet<ProtocolExercise> ProtocolExercises { get; set; } = null!;
     public DbSet<ActivityLog> ActivityLogs { get; set; } = null!;
+    public DbSet<Appointment> Appointments { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
