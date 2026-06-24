@@ -14,7 +14,7 @@ public class AppointmentRepository : IAppointmentRepository
         _context = context;
     }
 
-    public async Task<List<Appointment>> GetTodayAppointmentsAsync(Guid practitionerId)
+    public async Task<List<Appointment>> GetTodayAppointmentsAsync(Guid userId)
     {
         var today = DateTime.UtcNow.Date;
 
@@ -22,7 +22,7 @@ public class AppointmentRepository : IAppointmentRepository
             .Include(a => a.Patient)
                 .ThenInclude(p => p.User)
             .Include(a => a.CareEpisode)
-            .Where(a => a.PractitionerId == practitionerId
+            .Where(a => a.Practitioner.UserId == userId
                      && a.ScheduledAt.Date == today)
             .OrderBy(a => a.ScheduledAt)
             .ToListAsync();

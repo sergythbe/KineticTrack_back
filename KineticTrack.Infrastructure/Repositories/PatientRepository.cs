@@ -18,4 +18,12 @@ public class PatientRepository : IPatientRepository
     {
         await _context.Patients.AddAsync(patient);
     }
+    public async Task<Patient?> GetByIdWithDetailsAsync(Guid patientId)
+    {
+        return await _context.Patients
+            .Include(p => p.User)
+            .Include(p => p.CareEpisodes)
+                .ThenInclude(e => e.Protocols)
+            .FirstOrDefaultAsync(p => p.PatientId == patientId);
+    }
 }

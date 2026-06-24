@@ -5,4 +5,5 @@ namespace KineticTrack.Domain.Repositories;
 public interface IPatientRepository
 {
     Task AddAsync(Patient patient);
+    Task<Patient?> GetByIdWithDetailsAsync(Guid patientId);
 }

@@ -20,6 +20,7 @@ public static class DependencyInjection
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IDashboardService, DashboardService>();
         services.AddScoped<IAppointmentService, AppointmentService>();
+        services.AddScoped<IPatientService, PatientService>();
         services.AddAuthorization();
 
         return services;
