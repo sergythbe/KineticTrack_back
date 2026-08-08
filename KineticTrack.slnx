@@ -1,3 +1,8 @@
 <Solution>
   <Project Path="KineticTrack.Api/KineticTrack.Api.csproj" />
+  <Project Path="KineticTrack.Application/KineticTrack.Application.csproj" Id="05c44b0b-c045-47aa-a005-a9f241594e6b" />
+  <Project Path="KineticTrack.Bootstrapper/KineticTrack.Bootstrapper.csproj" Id="ce5f1bf0-6df3-4cc5-9e6a-c7ab2b59f598" />
+  <Project Path="KineticTrack.Domain/KineticTrack.Domain.csproj" Id="50afce1a-9696-43bc-99b6-5492810d748f" />
+  <Project Path="KineticTrack.Infrastructure/KineticTrack.Infrastructure.csproj" Id="cf92d102-371c-4782-8663-53fdc2cde049" />
+  <Project Path="KineticTrack.Security/KineticTrack.Security.csproj" Id="62fee6dd-fd3e-4faf-9216-7832bc560425" />
 </Solution>
